@@ -34,5 +34,3 @@ Run Instructions
 
 Expected Result
 The client downloads the file and saves it locally with a name such as test_downloaded.txt.
-
-

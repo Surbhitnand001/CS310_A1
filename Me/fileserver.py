@@ -1,42 +1,62 @@
+# Authors: Surbhit Nand(S11230283), Parvish Mohan(S11230414)
+
 import socket
 import os
 
-HOST = "127.0.0.1"
-PORT = 5000
+HOST = "127.0.0.1"  
+PORT = 5000          
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.bind((HOST, PORT))
-server_socket.listen(1)
+try:
+    serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-print("Server is waiting for a connection...")
+    serverSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-client_socket, client_address = server_socket.accept()
-print(f"Connected to {client_address}")
+    serverSocket.bind((HOST, PORT))
 
-filename =  client_socket.recv(1024).decode()
-print(f"Client requested file: {filename}")
+    serverSocket.listen(1)
+    print("Server is waiting for a connection...")
 
-if os.path.exists(filename):
-    client_socket.send("OK".encode())
-    print(f"Filename :'{filename}'found. Sending...")
+    clientSocket, client_address = serverSocket.accept()
+    print(f"Connected to {client_address}. Ready for communication.")
 
-    file_size = os.path.getsize(filename)
-    client_socket.send(str(file_size).encode())
+    filename = clientSocket.recv(1024).decode()
+    print(f"Client requested file: {filename}")
 
-    with open(filename, "rb") as f:
-        bytes_sent = 0
-        while True:
-            chunk = f.read(1024)
-            if not chunk:
-                break
-            client_socket.send(chunk)
-            bytes_sent += 1024
+    if os.path.exists(filename):
+        clientSocket.send("OK".encode())
+        print(f"File '{filename}' found. Sending...")
 
-        print("File Transfer Successful")
-else:
-    client_socket.send("File doees not exist".encode())
-    print("File not found. Notifying client.")
+        file_size = os.path.getsize(filename)
+        clientSocket.send(str(file_size).encode())
 
+        try:
+            with open(filename, "rb") as f:
+                bytes_sent = 0
+                while True:
+                    chunk = f.read(1024)
 
-client_socket.close()
-server_socket.close()
+                    if not chunk:
+                        break
+
+                    clientSocket.send(chunk)
+                    bytes_sent += len(chunk)
+
+            print("File transfer successful")
+
+        except IOError as e:
+            print(f"File I/O error: {e}")
+
+    else:
+        clientSocket.send("File does not exist".encode())
+        print("File not found. Notifying client.")
+
+except socket.error as e:
+    print(f"Socket error: {e}")
+
+finally:
+    try:
+        clientSocket.close()
+    except:
+        pass
+    serverSocket.close()
+    print("Server closed.")
