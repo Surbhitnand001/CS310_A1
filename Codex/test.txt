@@ -1,0 +1,2 @@
+This is a sample file for CS310 Assignment 1.
+The client should download this content from the server successfully.
