@@ -1,6 +1,6 @@
 """
 CS310 Assignment 1 - File Transfer Client
-Student Name: [Add Your Name Here]
+Student Names: Surbhit Nand
 
 This client connects to 127.0.0.1:5000, requests a file by name, receives the
 server response, shows the download progress percentage, and saves the file in
