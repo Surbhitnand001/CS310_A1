@@ -3,18 +3,23 @@
 import socket
 import os
 
-HOST = "127.0.0.1"  
+HOST = "127.0.0.1" #IPV4
 PORT = 5000          
 
 try:
+    #Determines the type of IP addres and Protocol to use
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+    #connects socket through the PORT to the HOST
     clientSocket.connect((HOST, PORT))
     print("Connected to server!")
 
+    #Takes filename
     filename = input("Enter the filename you want to download: ")
+    #Encode it to binary and sends to server side
     clientSocket.send(filename.encode())
 
+    #Determines wheather file exists or not
     response = clientSocket.recv(1024).decode()
 
     if response == "OK":

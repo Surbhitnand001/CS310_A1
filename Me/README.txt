@@ -1,36 +1,44 @@
-CS310 Assignment 1 - File Transfer Application
-Student Name: Surbhit Nand(S11230283)
-Student Name: Parvish Mohan(S11230414)
+# Socket programming
+## CS310 ASSIGNMNET 1 - SEMESTER 1
 
-Overview
-This project is a simple client-server file transfer application built with Python socket programming.
-It uses TCP, runs on the same PC for demonstration, and supports downloading a file from the server to the client.
+Authors : Surbhit Nand  - S11230283
+		: Parvish Mohan - S11230414
 
-How It Works
-1. The server starts first and listens on 127.0.0.1:5000.
-2. The client connects to the server and sends the name of the file it wants.
-3. The server checks whether the file exists.
-4. If the file exists, the server sends the file size and then the file contents.
-5. The client receives the file, shows download progress, and saves it in the current working directory with a _downloaded suffix.
+## Overview
+This appliication illustrates a simple file transfer protocol(FTP) using the Transfer Conbtrol Protocol(TCP) socket avaiable through the library of Python.
+It consists of two programs, the cilent & server that will be run on the same machine on separate windows terminal. Ther server will listen for any client connection,
+validates wheather the requested files exists or not and transmit the file. The client connects to the server than requests a file of any type, displays the download progress and 
+saves the file locally with a "_downloaded" suffix added to its end. 
 
-Requirements Covered
-1. Python 3 is used.
-2. TCP is used as the reliable transport protocol.
-3. The server and client both use 127.0.0.1 and port 5000.
-4. The server handles one client connection at a time.
-5. Error handling is included for connection and file transfer problems.
-6. The code is commented to show the flow of connection, file request, transfer, and progress reporting.
+## Files included
+'fileserver.py' -> server program that handles the files request and transfers
+'client.py'     -> client program which handles the request and receives the files
+'README.txt'    -> this file
 
-Run Instructions
-1. Place a sample file such as test.txt in the server folder.
-2. Open a terminal in the folder that contains fileserver.py and client.py.
-3. Start the server:
-	python fileserver.py
-4. Open a second terminal in the same folder.
-5. Start the client:
-	python client.py
-6. When prompted, type the name of the file to download, for example:
-	test.txt
+## How to Run
 
-Expected Result
-The client downloads the file and saves it locally with a name such as test_downloaded.txt.
+### STEP 1 - Placement of the files
+Place the 'client.py', 'fileserver.py' and the file you wish to send e.g. test.txt, by the server and be receveied 
+by the client in the same folder
+
+### STEP 2 - Start the server 
+Open the terminal and naviagte to where you have stored all the above mentioned files
+than type 'python fileserver.py'
+You will see -> Sever is waiting for a connection
+
+### STEP 3 - Start the client
+Open termainal and naviagte to the folder
+than type 'python client.py'
+
+### STEP 4 - Enter File name
+After you have run 'python client.py'
+You will see a prompt to enter the file name where you will type the
+<filename>.<filetype>
+E.g. test.txt
+
+### STEP 5 - Display the download progression
+The client side will display the download progress
+Upon showing Downlaoding ...100%
+The file has downloaded and is saved as <filename>_downloaded.txt
+E.g. test.txt -> file requested by the client
+	 test_downloaded.txt -> downloaded version on the client side
