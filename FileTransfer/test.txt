@@ -1,2 +1,4 @@
 This is a sample file for CS310 Assignment 1.
 The client should download this content from the server successfully.
+
+If you can read this in the *_downloaded.txt file, the transfer worked.
